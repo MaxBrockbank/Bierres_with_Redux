@@ -4,55 +4,15 @@ import BeerList from './BeerList';
 import NewBeerForm from './NewBeerForm';
 import EditBeerForm from './EditBeerForm';
 import './../App.css';
-import { v4 } from 'uuid'
+import * as a from './../Actions/index'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Control extends React.Component{
   constructor(props){
     super(props);
     this.state={
       formVisible: false,
-      masterBeerList:[
-        {
-          name: "Czech Pilsner",
-          brand: "Buoy",
-          price: 4.99,
-          ABV: 6.2,
-          quantity: 9,
-          id: v4()
-        },
-        {
-          name: "Hazy Lil' Thing ",
-          brand: "Sierra Nevada",
-          price: 5.99,
-          ABV: 5.1,
-          quantity: 20,
-          id: v4()
-        },
-        {
-          name: "Hefeweizen",
-          brand: "Widmer Brothers",
-          price: 6.99,
-          ABV: 6.0,
-          quantity: 3,
-          id: v4()
-        },
-        {
-          name: "Corona",
-          brand: "Cervecería Modelo",
-          price: 4.99,
-          ABV: 4.6,
-          quantity: 8,
-          id: v4()
-        },
-        {
-          name: "Classic Beer",
-          brand: "Good Beer Co.",
-          price: 10.99,
-          ABV: 8.2,
-          quantity: 124,
-          id: v4()
-        }
-      ],
       selectedBeer:null,
       editing: false
     }
@@ -73,17 +33,18 @@ class Control extends React.Component{
   }
 
   handleAddNewBeerToList = (newBeer) => {
-    const newMasterBeerList = this.state.masterBeerList.concat(newBeer);
+    const { dispatch } = this.props;
+    let action = a.addBeer(newBeer);
+    dispatch(action);
     this.setState({
-      masterBeerList: newMasterBeerList,
       formVisible: false
     })
   }
 
   handleRestockBeer= (id, restockAmount) => {
-    let newMasterBeerList = this.state.masterBeerList;
+    let newMasterBeerList = this.props.masterBeerList;
     if(restockAmount > 0){
-      newMasterBeerList = this.state.masterBeerList.map(beer=> ({
+      newMasterBeerList = Object.values(this.props.masterBeerList).map(beer=> ({
         ...beer,
         quantity: beer.id === id ? beer.quantity + restockAmount : beer.quantity
       }))
@@ -95,7 +56,7 @@ class Control extends React.Component{
   }
 
   handleBuyBeer = (id) => {
-    const newMasterBeerList = this.state.masterBeerList.map(beer => ({
+    const newMasterBeerList = Object.values(this.props.masterBeerList).map(beer => ({
       ...beer,
       quantity: beer.id === id ? beer.quantity -1: beer.quantity
     }))
@@ -107,7 +68,7 @@ class Control extends React.Component{
 
 
   handleEditingBeerInList = (beerToEdit) => {
-    const editedMasterBeerList = this.state.masterBeerList
+    const editedMasterBeerList = Object.values(this.props.masterBeerList)
       .filter(beer => beer.id !== this.state.selectedBeer.id)
       .concat(beerToEdit);
     this.setState({
@@ -122,21 +83,22 @@ class Control extends React.Component{
   }
 
   handleDeletingBeer = (id) => {
-    const newMasterBeerList = this.state.masterBeerList.filter(beer => beer.id !== id);
+    const { dispatch } = this.props; 
+    const action = a.deleteBeer(id);
+    dispatch(action);
     this.setState({
-      masterBeerList: newMasterBeerList,
       editing: false,
       selectedBeer:null
     })
   }
 
   handleChangingSelectedBeer = (id) => {
-    const selectedBeer = this.state.masterBeerList.filter(beer => beer.id === id)[0];
+    const selectedBeer = Object.values(this.props.masterBeerList).filter(beer => beer.id === id)[0];
     this.setState({selectedBeer: selectedBeer});
   }
 
   render(){
-
+    console.log(this.props.masterBeerList);
     let buttonText = null;
     let currentComponent = null;
 
@@ -150,7 +112,7 @@ class Control extends React.Component{
       currentComponent = <NewBeerForm onNewBeerCreation = {this.handleAddNewBeerToList}/>
       buttonText = "Return to beer list"
     } else {
-      currentComponent = <BeerList beerList={this.state.masterBeerList} onBeerSelection={this.handleChangingSelectedBeer}/>
+      currentComponent = <BeerList beerList={this.props.masterBeerList} onBeerSelection={this.handleChangingSelectedBeer}/>
       buttonText = "Add new beer"
     }
     return(
@@ -161,5 +123,23 @@ class Control extends React.Component{
     );
   }
 }
+
+Control.propTypes = {
+  masterBeerList: PropTypes.object,
+  // selectedBeer: PropTypes.object,
+  // formVisible: PropTypes.bool,
+  // editing: PropTypes.bool
+};
+
+const mapStateToProps = state => {
+  return{
+    masterBeerList: state.masterBeerList,
+    selectedBeer: state.selectedBeer,
+    formVisible: state.formVisible,
+    editing: state.editing
+  }
+};
+
+Control = connect(mapStateToProps)(Control);
 
 export default Control;

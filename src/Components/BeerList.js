@@ -10,7 +10,7 @@ function BeerList(props){
   function _createBeerGrid() {
     let rows = {};
     let counter = 1;
-    props.beerList.forEach((beer, index) => {
+    Object.values(props.beerList).forEach((beer, index) => {
       rows[counter] = rows[counter] ? [...rows[counter]] : [];
       if(index % 4 === 0 && index !== 0){
         counter ++
