@@ -1,5 +1,4 @@
 import rootReducer from './../../Reducers/index';
-import indexReducer from './../../Reducers/index';
 
 describe('index reducer', ()=> {
   it('will return default values of all reducers if no action is specified', () => {
