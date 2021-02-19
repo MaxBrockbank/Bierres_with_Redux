@@ -36,4 +36,20 @@ describe('selected beer reducer', ()=>{
       id:id
     })
   })
+
+  it('should clear the selected beer of an object and reset to null if action type is CLEAR_SELECT', ()=> {
+    const {name, brand, price, ABV, quantity, id} = newSelect;
+    const currentState = {
+      name: name,
+      brand: brand,
+      price: price,
+      ABV:ABV,
+      quantity:quantity,
+      id:id
+    }
+    action = {
+      type: 'CLEAR_SELECT'
+    }
+    expect(selectedBeer(currentState, action)).toEqual(null)
+  })
 })
