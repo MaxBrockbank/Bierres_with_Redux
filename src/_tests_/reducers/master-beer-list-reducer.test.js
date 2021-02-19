@@ -28,13 +28,14 @@ const newBeer = {
       id: id
     }
     expect(masterBeerList({}, action)).toEqual({
-      type: 'ADD_BEER',
-      name: name,
-      brand: brand, 
-      price: price,
-      ABV: ABV,
-      quantity: quantity, 
-      id: id
+      [id]: {
+        name: name,
+        brand: brand, 
+        price: price,
+        ABV: ABV,
+        quantity: quantity, 
+        id: id
+      }
     })
   })
 })
