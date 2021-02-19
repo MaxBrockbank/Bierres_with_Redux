@@ -3,7 +3,7 @@
 <img src="https://github.com/MaxBrockbank.png" width="200px" height="auto" >
 </div>
 <p align="center">Authored by Max Brockabnk</p>
-<p align="center">Updated on Feb 12, 2021</p>
+<p align="center">Updated on Feb 18, 2021</p>
 
 # Description
 Bierre's Taphouse is a React application where a user manages inventory for the business. There is full CRUD functionality for beers to create new ones, edit and delete exisiting ones and as well as manipulate their current quantity. 
