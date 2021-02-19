@@ -51,7 +51,7 @@ function BeerList(props){
 }
 
 BeerList.propTypes = {
-  beerList: PropTypes.array,
+  beerList: PropTypes.object,
   onBeerSelection: PropTypes.func
 }
 

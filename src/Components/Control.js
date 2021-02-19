@@ -12,23 +12,26 @@ class Control extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      formVisible: false,
+      // formVisible: false,
       selectedBeer:null,
       editing: false
     }
   }
 
   handleClick = () => {
+    const { dispatch } = this.props
     if(this.state.selectedBeer != null){
+      if(this.props.formVisible){
+        const action = a.toggleForm();
+        dispatch(action);
+      }
       this.setState({
-        formVisible: false,
         selectedBeer: null,
         editing: false
       });
     } else {
-      this.setState(prevState => ({
-        formVisible: !prevState.formVisible
-      }));
+      const action2 = a.toggleForm();
+      dispatch(action2);
     }
   }
 
@@ -108,7 +111,7 @@ class Control extends React.Component{
     } else if(this.state.selectedBeer !== null){
       currentComponent = <BeerDetails beer={this.state.selectedBeer} onClickingDelete = {this.handleDeletingBeer} onClickingEdit = {this.handleEditClick} onRestocking = {this.handleRestockBeer} onBuying = {this.handleBuyBeer} />
       buttonText = "Return to beer list"
-    }else if(this.state.formVisible){
+    }else if(this.props.formVisible){
       currentComponent = <NewBeerForm onNewBeerCreation = {this.handleAddNewBeerToList}/>
       buttonText = "Return to beer list"
     } else {
@@ -127,7 +130,7 @@ class Control extends React.Component{
 Control.propTypes = {
   masterBeerList: PropTypes.object,
   // selectedBeer: PropTypes.object,
-  // formVisible: PropTypes.bool,
+  formVisible: PropTypes.bool,
   // editing: PropTypes.bool
 };
 
