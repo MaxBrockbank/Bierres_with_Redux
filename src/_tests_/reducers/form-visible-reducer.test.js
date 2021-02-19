@@ -12,7 +12,6 @@ describe('form visible reducer', () => {
     action = {
       type: 'TOGGLE_FORM'
     }
-
     expect(formVisible(false, action)).toEqual(true);
   })
 })
