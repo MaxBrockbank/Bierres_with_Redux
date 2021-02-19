@@ -10,6 +10,8 @@ export default (state=null, action) => {
         quantity:quantity,
         id:id
       }
+    case 'CLEAR_SELECT':
+      return null;
     default:
       return state;
   }
