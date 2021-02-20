@@ -9,14 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Control extends React.Component{
-  constructor(props){
-    super(props);
-    this.state={
-      // selectedBeer:null,
-      editing: false
-    }
-  }
-
   handleClick = () => {
     const { dispatch } = this.props
     if(this.props.selectedBeer != null){
@@ -25,11 +17,11 @@ class Control extends React.Component{
         dispatch(action);
       }
       const action2 = a.clearSelect();
-      dispatch(action2);
-      this.setState({
-        // selectedBeer: null,
-        editing: false
-      });
+      dispatch(action2); 
+      if(this.props.editing){
+        const action3 = a.toggleEdit
+        dispatch(action3);
+      }
     } else {
       const action2 = a.toggleForm();
       dispatch(action2);
@@ -72,13 +64,16 @@ class Control extends React.Component{
     dispatch(action);
     const action2 = a.clearSelect();
     dispatch(action2);
-    this.setState({
-      editing: false,
-    })
+    if(this.props.editing){
+      const action3 = a.toggleEdit();
+      dispatch(action3);
+    }
   }
 
   handleEditClick = () => {
-    this.setState({editing: true});
+    const { dispatch } = this.props;
+    const action = a.toggleEdit();
+    dispatch(action);
   }
 
   handleDeletingBeer = (id) => {
@@ -87,26 +82,23 @@ class Control extends React.Component{
     const action2 = a.clearSelect();
     dispatch(action);
     dispatch(action2);
-    this.setState({
-      editing: false,
-    })
+    if(this.props.editing){
+      const action3 = a.toggleEdit();
+      dispatch(action3);
+    }
   }
 
   handleChangingSelectedBeer = (id) => {
     const { dispatch } = this.props;
     const selectedBeer = Object.values(this.props.masterBeerList).filter(beer => beer.id === id)[0];
-    console.log(selectedBeer);
     const action = a.newSelect(selectedBeer);
     dispatch(action);
   }
 
   render(){
-    console.log(this.props.masterBeerList);
-    console.log(this.selectedBeer);
     let buttonText = null;
     let currentComponent = null;
-
-    if(this.state.editing){
+    if(this.props.editing){
       currentComponent = <EditBeerForm beer = {this.props.selectedBeer} onEditBeer={this.handleEditingBeerInList} />
       buttonText = "Return to beer list";
     } else if(this.props.selectedBeer !== null){
@@ -132,7 +124,7 @@ Control.propTypes = {
   masterBeerList: PropTypes.object,
   selectedBeer: PropTypes.object,
   formVisible: PropTypes.bool,
-  // editing: PropTypes.bool
+  editing: PropTypes.bool
 };
 
 const mapStateToProps = state => {
