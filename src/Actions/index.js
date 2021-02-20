@@ -20,10 +20,10 @@ export const deleteBeer = (id) => {
   };
 }
 
-export const addSelect = (beer) => {
+export const newSelect = (beer) => {
   const { name, brand, price, ABV, quantity, id } = beer;
   return {
-    type: c.ADD_SELECT,
+    type: c.NEW_SELECT,
     name: name,
     brand: brand,
     price: price,

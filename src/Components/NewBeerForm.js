@@ -12,11 +12,11 @@ function NewBeerForm(props){
   return(
     <React.Fragment>
       <form onSubmit={handleNewBeerFormSubmission} className="formMatt">
-        <input type='text' name='name' placeholder='Beer Name'/>
-        <input type='text' name='brand' placeholder='Beer Brand'/>
-        <input type='number' name='price' placeholder='Price Per Pint'/>
-        <input type='number' name='ABV' placeholder='ABV %'/>
-        <input type='number' name='quantity' placeholder='Pints In Stock'/>
+        <input type='text' name='name' placeholder='Beer Name' required/>
+        <input type='text' name='brand' placeholder='Beer Brand' required/>
+        <input type='number' name='price' placeholder='Price Per Pint' required/>
+        <input type='number' name='ABV' placeholder='ABV %' required />
+        <input type='number' name='quantity' placeholder='Pints In Stock' required/>
         <button type='submit' className="btn btn-dark">Add new beer</button>
       </form>
     </React.Fragment>
