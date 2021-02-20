@@ -1,4 +1,4 @@
-<h1 align="center">~Bierre's Taphouse~</h1>
+<h1 align="center">~Bierre's Taphouse w/ Redux~</h1>
 <div align="center">
 <img src="https://github.com/MaxBrockbank.png" width="200px" height="auto" >
 </div>
@@ -6,7 +6,7 @@
 <p align="center">Updated on Feb 18, 2021</p>
 
 # Description
-Bierre's Taphouse is a React application where a user manages inventory for the business. There is full CRUD functionality for beers to create new ones, edit and delete exisiting ones and as well as manipulate their current quantity. 
+Bierre's Taphouse is a React application where a user manages inventory for the business. There is full CRUD functionality for beers to create new ones, edit and delete exisiting ones and as well as manipulate their current quantity, as well as state solely managed by Redux. 
 
 
 ## Required Technologies
@@ -25,8 +25,11 @@ Bierre's Taphouse is a React application where a user manages inventory for the 
 * JavaScript
 * jQuery
 * React / JSX
+* Redux
+* React-Redux
 * React-Bootstrap
 * CSS
+
 ## Component Diagram
 <img src="READMEAssets/componentDiagram.jpg" alt="Taphouse component diagram">
 
